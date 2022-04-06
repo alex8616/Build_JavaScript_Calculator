@@ -1,0 +1,30 @@
+h1{
+    text-align: center;
+}
+.container-fluid{
+    background-color: black;
+    width: 30%;
+    padding: 10px;
+    border-radius: 3%;
+    border-style: solid;
+    border-style: double;
+}
+.col-3{
+    height: 235px;
+    /*border-style: solid;*/
+}
+
+#seven,#four,#one,#zero,#eight,#five,#two,#decimal,#nine,
+#six,#three,#equals{
+    width: 130%;
+    height: 50px;
+}
+#add,#subtract,#multiply,#divide{
+    width: 100%;
+    height: 50px;
+}
+.display{
+    background-color: white;
+    color: aliceblue;
+    
+}

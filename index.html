@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="CSS/estilos.css">
+    <title>JavaScript Calculator</title>
+
+    <script>
+        let trailingResult = 0;
+        let operationOptions = ['divide','multiply','subtract','add']
+        let workingOperation = "";
+
+        function updateDisplay(input){
+            let display = document.getElementById("display");
+            let secondDisplay = document.getElementById("secondDisplay");
+            
+            if(display.innerHTML === "0" && operationOptions.indexOf(input) === -1){
+                if(input === "decimal"){
+                    display.innerHTML = "0."; 
+                }else{
+                    display.innerHTML = input;  
+                }
+            }else if(operationOptions.indexOf(input) >= 0 ){
+                
+            if(trailingResult === display.innerHTML){
+                workingOperation = input;
+
+            }else if(workingOperation === ""){
+                workingOperation = input;
+                trailingResult = display.innerHTML;
+                display.innerHTML=0;
+            }else{
+                trailingResult = calculate(trailingResult, display.innerHTML, workingOperation)
+                secondDisplay.innerHTML = trailingResult;
+                display.innerHTML = 0;
+                workingOperation = input;
+                } 
+            }else if(input === "equals"){
+                display.innerHTML = calculate(parseFloat(trailingResult), display.innerHTML, workingOperation);
+                trailingResult = 0;
+                workingOperation = "";
+            }else if(input === "decimal"){
+                console.log('decimal clicked');
+                if(display.innerHTML.indexOf(".") === -1){
+                    display.innerHTML += ".";
+                }
+                console.log("decimal skipped because al ready in number");
+                
+            }else{
+                display.innerHTML += input;
+            }
+            console.log(trailingResult,"<= trailingresult", display.innerHTML, " <= display.innerHTML", workingOperation, " <= workoperation");
+        }
+
+        function clearDisplay(){
+            let display = document.getElementById("display");
+            display.innerHTML = 0;
+        }
+
+        function calculate(firstNumber, secondNumber, operation){
+            let result;
+            firstNumber = parseFloat(firstNumber);
+            secondNumber = parseFloat(secondNumber);
+            switch(operation){
+                case "add":
+                    result = firstNumber + secondNumber;
+                    break;
+                case "subtract":
+                    result = firstNumber - secondNumber;
+                    break;
+                case "multiply":
+                    result = firstNumber * secondNumber;
+                    break;    
+                case "divide":
+                    result = firstNumber / secondNumber;
+                    break;
+                default:
+                    console.log("Calculate switch statement missed somethng");
+            }
+            return result.toString();
+        }
+
+    </script>
+  </head>
+  <body>
+    <h1>JavaScript Calculator!</h1>
+
+    <div class="container-fluid">
+
+        <div class="row text-center">
+            <div class="col-6">
+                <div id="display" class="bg-light text-center text-blue my-3 py-4">0</div>
+            </div>
+            <div class="col-6">
+                <div id="secondDisplay" class="bg-light text-center text-blue my-3 py-4">0</div>
+            </div>
+        </div>
+
+        <div class="row text-center">
+        
+            <div class="col-3">
+                <a id="seven" class="btn btn-block btn-success" onclick="updateDisplay(7)">7</a> 
+                <a id="four" class="btn btn-block btn-success" onclick="updateDisplay(4)">4</a> 
+                <a id="one" class="btn btn-block btn-success" onclick="updateDisplay(1)">1</a> 
+                <a id="zero" class="btn btn-block btn-success" onclick="updateDisplay(0)">0</a>
+            </div>
+            <div class="col-3">
+                <a id="eight" class="btn btn-block btn-success" onclick="updateDisplay(8)">8</a> 
+                <a id="five" class="btn btn-block btn-success" onclick="updateDisplay(5)">5</a> 
+                <a id="two" class="btn btn-block btn-success" onclick="updateDisplay(2)">2</a> 
+                <a id="decimal" class="btn btn-block btn-success" onclick="updateDisplay('decimal')">.</a>   
+            </div>
+            <div class="col-3">
+                <a id="nine" class="btn btn-block btn-success" onclick="updateDisplay(9)">9</a> 
+                <a id="six" class="btn btn-block btn-success" onclick="updateDisplay(6)">6</a> 
+                <a id="three" class="btn btn-block btn-success" onclick="updateDisplay(3)">3</a> 
+                <a id="equals" class="btn btn-block btn-primary" onclick="updateDisplay('equals')">=</a> 
+            </div>
+            <div class="col-3">
+                <a id="add" class="btn btn-block btn-secondary" onclick="updateDisplay('add')">+</a> 
+                <a id="subtract" class="btn btn-block btn-secondary" onclick="updateDisplay('subtract')">-</a> 
+                <a id="multiply" class="btn btn-block btn-secondary" onclick="updateDisplay('multiply')">x</a> 
+                <a id="divide" class="btn btn-block btn-secondary" onclick="updateDisplay('divide')">/</a>
+
+            </div>
+            <div class="col col">
+                <a id="clear" class="btn btn-block btn-danger" onclick="clearDisplay()">CLEAR</a>
+            </div>
+        </div>
+
+        
+        
+        
+        
+
+    </div>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+  </body>
+</html>
